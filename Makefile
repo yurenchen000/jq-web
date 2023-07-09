@@ -28,6 +28,13 @@ jq/jq.o: jq/configure
 	  env CCFLAGS=-O2 emmake make LDFLAGS=-all-static CCFLAGS=-O2 -j4 && \
 	  cp jq jq.o
 
+
+up:
+	cd jq && \
+	  env CCFLAGS=-O2 emmake make LDFLAGS=-all-static CCFLAGS=-O2 -j4 && \
+	  cp jq jq.o
+
+
 jq.asm.js: jq/jq.o pre.js post.js
 	cd jq && \
 	  emcc -O3 -s EXTRA_EXPORTED_RUNTIME_METHODS='["callMain"]' -s TOTAL_MEMORY=32MB -s MODULARIZE_INSTANCE=1 -s EXPORT_NAME="jq" -s WASM=0 --memory-init-file 1 --pre-js ../pre.js --post-js ../post.js jq.o -o ../jq.asm.js
